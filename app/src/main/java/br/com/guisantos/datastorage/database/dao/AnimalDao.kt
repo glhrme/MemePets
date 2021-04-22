@@ -1,6 +1,7 @@
 package br.com.guisantos.datastorage.database.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import br.com.guisantos.datastorage.database.entities.Animal
 
@@ -8,4 +9,7 @@ import br.com.guisantos.datastorage.database.entities.Animal
 interface AnimalDao {
     @Query("SELECT * FROM animal")
     fun getAll(): List<Animal>
+
+    @Insert
+    fun create(animal: Animal)
 }

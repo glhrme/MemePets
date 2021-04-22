@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Animal (
-    @PrimaryKey(autoGenerate = true) val uid: Int?,
     @ColumnInfo(name = "name") val animalName: String?
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var uid: Int = 0
+}
