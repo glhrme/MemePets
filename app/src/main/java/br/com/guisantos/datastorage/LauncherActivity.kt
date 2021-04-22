@@ -11,7 +11,6 @@ import br.com.guisantos.datastorage.database.entities.Animal
 import br.com.guisantos.datastorage.views.AnimalView
 
 class LauncherActivity : AppCompatActivity() {
-
     private var database: AnimalDatabase? = null
     private var dao: AnimalDao? = null
     private var adapter: AnimalAdapterView? = null
@@ -26,6 +25,6 @@ class LauncherActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val recyclerView: RecyclerView = findViewById(R.id.ac_launcher_animal_list)
-        AnimalView(dao!!.getAll(), recyclerView, this)
+        AnimalView(dao!!.getAll(), recyclerView, this).init()
     }
 }

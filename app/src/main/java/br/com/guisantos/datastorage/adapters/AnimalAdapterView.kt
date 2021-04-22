@@ -21,8 +21,8 @@ class AnimalAdapterView(private val context: Context, private val animals: List<
     }
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
-        Log.i("debug_teste", "Entrou Aqui")
-        holder.fillData()
+        var animal: Animal = animals[position]
+        holder.fillData(animal)
     }
 
     override fun getItemCount(): Int {
@@ -38,8 +38,8 @@ class AnimalAdapterView(private val context: Context, private val animals: List<
             animalName = itemView.findViewById(R.id.item_animal_name)
         }
 
-        fun fillData() {
-            animalName?.text = "Oi Mundo"
+        fun fillData(animal: Animal) {
+            animalName?.text = animal.animalName
         }
     }
 
