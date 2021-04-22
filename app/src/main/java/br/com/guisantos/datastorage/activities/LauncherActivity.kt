@@ -18,7 +18,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class LauncherActivity : AppCompatActivity() {
     private var database: AnimalDatabase? = null
     private var dao: AnimalDao? = null
-    private var adapter: AnimalAdapterView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +38,8 @@ class LauncherActivity : AppCompatActivity() {
                 View.OnClickListener() {
                     view: View -> ActivityCompat.startActivity(this, Intent(this, FormAnimalActivity::class.java), ActivityOptionsCompat.makeCustomAnimation(this,
                     R.anim.fade_in,
-                    R.transition.right_to_left
-                ).toBundle())
+                    R.transition.right_to_left)
+                    .toBundle())
                 }
         )
     }
