@@ -1,4 +1,4 @@
-package br.com.guisantos.datastorage
+package br.com.guisantos.datastorage.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.guisantos.datastorage.activities.FormAnimalActivity
+import br.com.guisantos.datastorage.R
 import br.com.guisantos.datastorage.adapters.AnimalAdapterView
 import br.com.guisantos.datastorage.database.AnimalDatabase
 import br.com.guisantos.datastorage.database.dao.AnimalDao
@@ -37,7 +37,10 @@ class LauncherActivity : AppCompatActivity() {
     fun fabAddAnimal() {
         findViewById<FloatingActionButton>(R.id.ac_launcher_btn_adicionar).setOnClickListener(
                 View.OnClickListener() {
-                    view: View -> ActivityCompat.startActivity(this, Intent(this, FormAnimalActivity::class.java), ActivityOptionsCompat.makeCustomAnimation(this, R.anim.fade_in, R.transition.right_to_left).toBundle())
+                    view: View -> ActivityCompat.startActivity(this, Intent(this, FormAnimalActivity::class.java), ActivityOptionsCompat.makeCustomAnimation(this,
+                    R.anim.fade_in,
+                    R.transition.right_to_left
+                ).toBundle())
                 }
         )
     }
