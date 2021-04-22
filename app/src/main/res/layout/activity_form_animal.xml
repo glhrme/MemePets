@@ -4,6 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.FormAnimal">
+    tools:context=".activities.FormAnimalActivity">
 
+    <EditText
+        android:id="@+id/ac_form_animal_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/nome_do_animal"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/ac_form_animal_display_genero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gender"
+        app:layout_constraintBottom_toBottomOf="@+id/ac_form_animal_gender_group"
+        app:layout_constraintStart_toStartOf="@+id/ac_form_animal_name"
+        app:layout_constraintTop_toBottomOf="@+id/ac_form_animal_name"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <RadioGroup
+        android:id="@+id/ac_form_animal_gender_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/ac_form_animal_display_genero"
+        app:layout_constraintTop_toBottomOf="@+id/ac_form_animal_name">
+
+        <RadioButton
+            android:id="@+id/ac_form_animal_radio_macho"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Macho" />
+
+        <RadioButton
+            android:id="@+id/ac_form_animal_radio_femea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Femea" />
+    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

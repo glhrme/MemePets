@@ -2,4 +2,7 @@
     <string name="app_name">Data Storage</string>
     <string name="gender">Gênero: </string>
     <string name="bot_o_para_adicionar_novo_animal">Botão para Adicionar novo Animal</string>
+    <string name="nome_do_animal">Nome do Animal</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="salvar">Salvar</string>
 </resources>

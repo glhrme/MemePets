@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group >
+        <item
+            android:id="@+id/ac_form_menu_cancel"
+            android:icon="@drawable/ic_baseline_cancel_24"
+            android:title="@string/cancelar"
+            app:showAsAction="always" />
+        <item
+            android:id="@+id/ac_form_menu_save"
+            android:icon="@drawable/ic_baseline_save_24"
+            android:title="@string/salvar"
+            app:showAsAction="always" />
+    </group>
+</menu>
