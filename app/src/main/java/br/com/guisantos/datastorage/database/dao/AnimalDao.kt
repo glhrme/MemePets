@@ -1,6 +1,7 @@
 package br.com.guisantos.datastorage.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import br.com.guisantos.datastorage.database.entities.Animal
@@ -12,4 +13,7 @@ interface AnimalDao {
 
     @Insert
     fun create(animal: Animal)
+
+    @Delete
+    fun delete(animal: Animal)
 }
