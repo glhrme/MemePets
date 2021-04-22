@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.guisantos.datastorage.activities.FormAnimalActivity
 import br.com.guisantos.datastorage.adapters.AnimalAdapterView
@@ -30,7 +31,7 @@ class LauncherActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val recyclerView: RecyclerView = findViewById(R.id.ac_launcher_animal_list)
-        AnimalView(dao!!.getAll(), recyclerView, this).init()
+        AnimalView(recyclerView, AnimalAdapterView(this , dao!!.getAll()), LinearLayoutManager(this)).init()
     }
 
     fun fabAddAnimal() {

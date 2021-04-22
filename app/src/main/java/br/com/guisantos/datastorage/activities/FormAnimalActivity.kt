@@ -12,6 +12,5 @@ class FormAnimalActivity : AppCompatActivity() {
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(R.transition.left_to_right, R.anim.fade_out)
     }
 }

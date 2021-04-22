@@ -8,11 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.guisantos.datastorage.adapters.AnimalAdapterView
 import br.com.guisantos.datastorage.database.entities.Animal
 
-class AnimalView(private val animals: List<Animal>, private val recyclerAnimal: RecyclerView, private val context: Context) {
+class AnimalView(
+    private val recyclerAnimal: RecyclerView,
+    private val adapter: AnimalAdapterView,
+    private val layout: RecyclerView.LayoutManager
+) {
 
     private fun adapterConfig(view: RecyclerView) {
-        view.adapter = AnimalAdapterView(context , animals)
-        view.layoutManager = LinearLayoutManager(context)
+        view.adapter = adapter
+        view.layoutManager = layout
     }
 
     fun init() {
