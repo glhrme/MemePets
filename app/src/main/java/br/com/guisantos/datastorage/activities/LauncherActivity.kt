@@ -19,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class LauncherActivity : AppCompatActivity() {
     private var database: AnimalDatabase? = null
     private var dao: AnimalDao? = null
+    private var animalView : AnimalView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,18 +27,22 @@ class LauncherActivity : AppCompatActivity() {
         database = AnimalDatabase.getInstance(this)
         dao = database?.getAnimalDao()
         fabAddAnimal()
-    }
 
-    override fun onResume() {
-        super.onResume()
         val recyclerView: RecyclerView = findViewById(R.id.ac_launcher_animal_list)
-        AnimalView(
+        animalView = AnimalView(
                 recyclerView,
                 AnimalAdapterView(this , dao!!.getAll()),
                 LinearLayoutManager(this),
                 this,
                 dao!!
-            ).init()
+        )
+        animalView!!.init()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        animalView!!.uptadeAdapter(dao!!.getAll())
     }
 
     fun fabAddAnimal() {

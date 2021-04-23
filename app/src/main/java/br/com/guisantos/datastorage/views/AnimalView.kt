@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import br.com.guisantos.datastorage.activities.FormAnimalActivity
 import br.com.guisantos.datastorage.adapters.AnimalAdapterView
 import br.com.guisantos.datastorage.database.dao.AnimalDao
 import br.com.guisantos.datastorage.database.entities.Animal
+import br.com.guisantos.datastorage.types.Extras
 import java.io.Serializable
 
 class AnimalView(
@@ -39,13 +41,19 @@ class AnimalView(
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 if (direction == ItemTouchHelper.LEFT) {
-                    adapter.removeAnimal(viewHolder.adapterPosition)
                     animalDao.delete(adapter.getAnimal(viewHolder.adapterPosition))
-                } else
-                    context.startActivity(Intent(context, FormAnimalActivity::class.java).putExtra("uidAnimal", adapter.getAnimal(viewHolder.adapterPosition).uid))
+                    adapter.removeAnimal(viewHolder.adapterPosition)
+                } else {
+                    context.startActivity(Intent(context, FormAnimalActivity::class.java).putExtra(Extras.ANIMAL_TO_EDIT, adapter.getAnimal(viewHolder.adapterPosition).uid))
+                }
+
             }
         })
         itemTouchHelper.attachToRecyclerView(view)
+    }
+
+    fun uptadeAdapter(animals: MutableList<Animal>) {
+        adapter.update(animals)
     }
 
     fun init() {
