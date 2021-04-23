@@ -1,18 +1,17 @@
 package br.com.guisantos.datastorage.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import br.com.guisantos.datastorage.R
 import br.com.guisantos.datastorage.database.AnimalDatabase
 import br.com.guisantos.datastorage.database.dao.AnimalDao
 import br.com.guisantos.datastorage.database.entities.Animal
+import br.com.guisantos.datastorage.types.Extras
 
 
 class FormAnimalActivity : AppCompatActivity() {
@@ -20,16 +19,24 @@ class FormAnimalActivity : AppCompatActivity() {
     private var dao: AnimalDao? = null
     private var animalNameField: EditText? = null
     private var animal: Animal = Animal("", Animal.UNDEFINED)
+    private var toEdit: Boolean = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_animal)
         database = AnimalDatabase.getInstance(this)
         dao = database?.getAnimalDao()
+        animalNameField = findViewById(R.id.ac_form_animal_name)
+        if(intent.hasExtra(Extras.ANIMAL_TO_EDIT)) {
+            toEdit = true
+            var uid = intent.getSerializableExtra(Extras.ANIMAL_TO_EDIT) as Int
+            animal = dao!!.getAnimal(uid)
+            animalNameField!!.setText(animal.animalName!!, TextView.BufferType.EDITABLE)
+            checkRadioButton()
+        }
     }
 
     override fun onResume() {
-        animalNameField = findViewById(R.id.ac_form_animal_name)
         radioGroupConfig()
         super.onResume()
     }
@@ -44,22 +51,13 @@ class FormAnimalActivity : AppCompatActivity() {
             finish()
         } else {
             animal.animalName = animalNameField?.text.toString()
-            dao?.create(animal)
+            if(toEdit)
+                dao?.update(animal)
+            else
+                dao?.create(animal)
             finish()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    fun onRadioButtonClicked(view: View): Int {
-        if(view is RadioButton) {
-            val checked = view.isChecked
-            when(view.id) {
-                R.id.ac_form_animal_radio_macho -> if(checked) return Animal.MACHO
-                R.id.ac_form_animal_radio_femea -> if(checked) return Animal.FEMEA
-                else return Animal.UNDEFINED
-            }
-        }
-        return Animal.UNDEFINED
     }
 
     private fun radioGroupConfig() {
@@ -70,6 +68,16 @@ class FormAnimalActivity : AppCompatActivity() {
                 animal.animalGender = Animal.FEMEA
             }
         })
+    }
+
+    private fun checkRadioButton() {
+        var radioButtonFemea: RadioButton = findViewById(R.id.ac_form_animal_radio_femea)
+        var radioButtonMacho: RadioButton = findViewById(R.id.ac_form_animal_radio_macho)
+        if(animal.animalGender == Animal.FEMEA) {
+            radioButtonFemea.isChecked = true
+        } else if(animal.animalGender == Animal.MACHO) {
+            radioButtonMacho.isChecked = true
+        }
     }
 
     override fun finish() {
