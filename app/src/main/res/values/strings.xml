@@ -5,4 +5,5 @@
     <string name="nome_do_animal">Nome do Animal</string>
     <string name="cancelar">Cancelar</string>
     <string name="salvar">Salvar</string>
+    <string name="foto_do_animal">Foto do animal</string>
 </resources>

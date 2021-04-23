@@ -17,16 +17,28 @@
         android:foregroundTint="@color/black"
         android:foregroundTintMode="add">
 
+        <ImageView
+            android:id="@+id/item_animal_image_view"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/foto_do_animal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
         <TextView
             android:id="@+id/item_animal_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_animal_image_view"
+            app:layout_constraintTop_toTopOf="@+id/item_animal_image_view"
             tools:text="Bailey" />
 
         <TextView
@@ -34,10 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:text="@string/gender"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/item_animal_image_view"
             app:layout_constraintStart_toStartOf="@+id/item_animal_name"
             app:layout_constraintTop_toBottomOf="@+id/item_animal_name" />
 
