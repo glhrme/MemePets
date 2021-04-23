@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Animal(
-    @ColumnInfo(name = "name") val animalName: String?,
-    @ColumnInfo(name = "gender") val animalGender: Int?
+    @ColumnInfo(name = "name") var animalName: String?,
+    @ColumnInfo(name = "gender") var animalGender: Int?
 ) {
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0

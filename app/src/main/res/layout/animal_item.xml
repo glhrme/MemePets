@@ -30,7 +30,7 @@
             tools:text="Bailey" />
 
         <TextView
-            android:id="@+id/item_animal_gender_display"
+            android:id="@+id/item_animal_gender_display_not_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -48,8 +48,8 @@
             android:layout_marginStart="8dp"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/item_animal_gender_display"
-            app:layout_constraintStart_toEndOf="@+id/item_animal_gender_display"
+            app:layout_constraintBottom_toBottomOf="@+id/item_animal_gender_display_not_edit"
+            app:layout_constraintStart_toEndOf="@+id/item_animal_gender_display_not_edit"
             tools:text="M" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

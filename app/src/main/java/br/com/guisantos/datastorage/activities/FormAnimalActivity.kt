@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import br.com.guisantos.datastorage.R
 import br.com.guisantos.datastorage.database.AnimalDatabase
@@ -15,8 +18,8 @@ import br.com.guisantos.datastorage.database.entities.Animal
 class FormAnimalActivity : AppCompatActivity() {
     private var database: AnimalDatabase? = null
     private var dao: AnimalDao? = null
-    private var animalName: EditText? = null
-
+    private var animalNameField: EditText? = null
+    private var animal: Animal = Animal("", Animal.UNDEFINED)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +29,8 @@ class FormAnimalActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        animalName = findViewById(R.id.ac_form_animal_name)
+        animalNameField = findViewById(R.id.ac_form_animal_name)
+        radioGroupConfig()
         super.onResume()
     }
 
@@ -39,11 +43,33 @@ class FormAnimalActivity : AppCompatActivity() {
         if(item.itemId == R.id.ac_form_menu_cancel) {
             finish()
         } else {
-            dao?.create(Animal(animalName!!.text.toString()))
-            Toast.makeText(this, "Salvar", Toast.LENGTH_LONG).show()
+            animal.animalName = animalNameField?.text.toString()
+            dao?.create(animal)
             finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun onRadioButtonClicked(view: View): Int {
+        if(view is RadioButton) {
+            val checked = view.isChecked
+            when(view.id) {
+                R.id.ac_form_animal_radio_macho -> if(checked) return Animal.MACHO
+                R.id.ac_form_animal_radio_femea -> if(checked) return Animal.FEMEA
+                else return Animal.UNDEFINED
+            }
+        }
+        return Animal.UNDEFINED
+    }
+
+    private fun radioGroupConfig() {
+        findViewById<RadioGroup>(R.id.ac_form_animal_gender_group).setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.ac_form_animal_radio_macho) {
+                animal.animalGender = Animal.MACHO
+            } else {
+                animal.animalGender = Animal.FEMEA
+            }
+        })
     }
 
     override fun finish() {
