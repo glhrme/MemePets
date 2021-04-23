@@ -2,7 +2,6 @@ package br.com.guisantos.datastorage.adapters
 
 import br.com.guisantos.datastorage.R
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +40,8 @@ class AnimalAdapterView(private val context: Context, private val animals: List<
 
         fun fillData(animal: Animal) {
             animalName?.text = animal.animalName
-            animalGender?.text = if(animal.animalGender == Animal.MACHO) "Macho" else if(animal.animalGender == Animal.FEMEA) "Fêmea" else "Sem informações"
+            animalGender?.text = Animal.genderValidator(animal?.animalGender)
+
         }
     }
 
