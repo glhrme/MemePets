@@ -2,7 +2,6 @@ package br.com.guisantos.datastorage.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -44,6 +43,7 @@ class LauncherActivity : AppCompatActivity() {
         super.onResume()
         animalView!!.uptadeAdapter(dao!!.getAll())
     }
+
 
     fun fabAddAnimal() {
         findViewById<FloatingActionButton>(R.id.ac_launcher_btn_adicionar).setOnClickListener(
