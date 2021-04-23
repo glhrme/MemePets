@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.guisantos.datastorage.database.entities.Animal
 
 
-class AnimalAdapterView(private val context: Context, private val animals: List<Animal>) : RecyclerView.Adapter<AnimalAdapterView.AnimalViewHolder>() {
+class AnimalAdapterView(private val context: Context, private val animals: MutableList<Animal>) : RecyclerView.Adapter<AnimalAdapterView.AnimalViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val viewAnimal = LayoutInflater.from(context).inflate(R.layout.animal_item, parent, false)
@@ -25,6 +25,15 @@ class AnimalAdapterView(private val context: Context, private val animals: List<
 
     override fun getItemCount(): Int {
         return animals.size
+    }
+
+    fun removeAnimal(position: Int){
+        animals.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun getAnimal(position: Int) :Animal {
+        return animals[position]
     }
 
     inner class AnimalViewHolder(itemView: View) : ViewHolder(itemView) {
@@ -47,3 +56,4 @@ class AnimalAdapterView(private val context: Context, private val animals: List<
 
 
 }
+

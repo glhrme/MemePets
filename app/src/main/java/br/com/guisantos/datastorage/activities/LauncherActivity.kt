@@ -31,7 +31,13 @@ class LauncherActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val recyclerView: RecyclerView = findViewById(R.id.ac_launcher_animal_list)
-        AnimalView(recyclerView, AnimalAdapterView(this , dao!!.getAll()), LinearLayoutManager(this)).init()
+        AnimalView(
+                recyclerView,
+                AnimalAdapterView(this , dao!!.getAll()),
+                LinearLayoutManager(this),
+                this,
+                dao!!
+            ).init()
     }
 
     fun fabAddAnimal() {

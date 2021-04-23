@@ -9,7 +9,7 @@ import br.com.guisantos.datastorage.database.entities.Animal
 @Dao
 interface AnimalDao {
     @Query("SELECT * FROM animal")
-    fun getAll(): List<Animal>
+    fun getAll(): MutableList<Animal>
 
     @Insert
     fun create(animal: Animal)
