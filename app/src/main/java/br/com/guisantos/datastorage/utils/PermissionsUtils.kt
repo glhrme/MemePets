@@ -8,20 +8,39 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 interface PermissionsUtils {
-    abstract class CameraPermissions {
+    abstract class FormAnimalPermission {
         companion object {
-            val RECORD_AUDIO_PERMISSION_CODE = 1000
-            fun requestCameraPermission(activity: Activity) {
+            val CAMERA_PERMISSION_CODE = 1000
+            val READ_STORAGE_PERMISSION_CODE = 3000
+            val WRITE_STORAGE_PERMISSION_CODE = 2000
+            val GALERY_STORAGE_CODE = 1360
+            fun requestAvatarPermission(activity: Activity) {
                 ActivityCompat.requestPermissions(
                     activity,
-                    arrayOf(Manifest.permission.CAMERA),
-                    RECORD_AUDIO_PERMISSION_CODE
+                    arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
+                    CAMERA_PERMISSION_CODE
+                )
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    WRITE_STORAGE_PERMISSION_CODE
+                )
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    READ_STORAGE_PERMISSION_CODE
                 )
             }
-            fun isCameraPermissionGranted(context: Context): Boolean {
-                return ContextCompat.checkSelfPermission(
+            fun isAvatarPermissionsGranted(context: Context): Boolean {
+                return return ContextCompat.checkSelfPermission(
                     context,
                     Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED
             }
         }
