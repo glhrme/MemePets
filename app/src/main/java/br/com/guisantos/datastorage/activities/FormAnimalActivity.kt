@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -24,6 +23,7 @@ import br.com.guisantos.datastorage.database.dao.AnimalDao
 import br.com.guisantos.datastorage.database.entities.Animal
 import br.com.guisantos.datastorage.types.Extras
 import br.com.guisantos.datastorage.utils.PermissionsUtils
+import br.com.guisantos.datastorage.utils.UtilsUri.Companion.getRealPathFromURI
 import java.io.File
 
 
@@ -50,6 +50,13 @@ class FormAnimalActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
             animal = dao!!.getAnimal(uid)
             animalNameField!!.setText(animal.animalName!!, TextView.BufferType.EDITABLE)
             checkRadioButton()
+            if(animal.imageString != Animal.EMPTY) {
+                imageViewAnimal!!.setImageURI(
+                    Uri.parse(
+                        File(animal.imageString).toString()
+                    )
+                )
+            }
         }
     }
 
@@ -82,13 +89,14 @@ class FormAnimalActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
 
     /* Configurações e Eventos do Radio Groupo Genero */
     private fun radioGroupConfig() {
-        findViewById<RadioGroup>(R.id.ac_form_animal_gender_group).setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
-            if (checkedId == R.id.ac_form_animal_radio_macho) {
-                animal.animalGender = Animal.MACHO
-            } else {
-                animal.animalGender = Animal.FEMEA
-            }
-        })
+        findViewById<RadioGroup>(R.id.ac_form_animal_gender_group).setOnCheckedChangeListener(
+            RadioGroup.OnCheckedChangeListener { group, checkedId ->
+                if (checkedId == R.id.ac_form_animal_radio_macho) {
+                    animal.animalGender = Animal.MACHO
+                } else {
+                    animal.animalGender = Animal.FEMEA
+                }
+            })
     }
 
     private fun checkRadioButton() {
@@ -103,7 +111,11 @@ class FormAnimalActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
 
     /* Configurações e Ações do Image View */
     private fun imageViewConfig() {
-        imageViewAnimal?.setOnClickListener(View.OnClickListener { view -> onClickListenerImageView(view) })
+        imageViewAnimal?.setOnClickListener(View.OnClickListener { view ->
+            onClickListenerImageView(
+                view
+            )
+        })
     }
 
     private fun onClickListenerImageView(view: View) {
@@ -195,7 +207,10 @@ class FormAnimalActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
     private fun getImageGalery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
 
-        startActivityForResult(Intent.createChooser(intent, "Escolha uma foto"), PermissionsUtils.FormAnimalPermission.GALERY_STORAGE_CODE)
+        startActivityForResult(
+            Intent.createChooser(intent, "Escolha uma foto"),
+            PermissionsUtils.FormAnimalPermission.GALERY_STORAGE_CODE
+        )
     }
 
     /*Resultado da Camera / Galeria */
@@ -205,13 +220,23 @@ class FormAnimalActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         if(resultCode == Activity.RESULT_OK) {
             when(requestCode) {
                 PermissionsUtils.FormAnimalPermission.GALERY_STORAGE_CODE -> addImageAnimal(data?.data)
-                PermissionsUtils.FormAnimalPermission.CAMERA_PERMISSION_CODE -> addImageAnimal(imagemUri)
+                PermissionsUtils.FormAnimalPermission.CAMERA_PERMISSION_CODE -> addImageAnimal(
+                    imagemUri
+                )
             }
         }
     }
 
-    private fun addImageAnimal (data: Uri?) {
-        imageViewAnimal!!.setImageURI(data)
+    private fun addImageAnimal(data: Uri?) {
+        val imageString = getRealPathFromURI(data!!, this)
+        if(imageString is String) {
+            imageViewAnimal!!.setImageURI(
+                Uri.parse(
+                    File(imageString).toString()
+                )
+            )
+            animal.imageString = imageString
+        }
     }
 
     override fun finish() {

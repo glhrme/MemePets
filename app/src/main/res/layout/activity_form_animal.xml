@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/ac_form_animal_image_picture"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/foto_do_animal"
         app:layout_constraintEnd_toEndOf="parent"

@@ -2,15 +2,19 @@ package br.com.guisantos.datastorage.adapters
 
 import br.com.guisantos.datastorage.R
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.guisantos.datastorage.database.entities.Animal
+import br.com.guisantos.datastorage.utils.UtilsUri
+import java.io.File
 
 
 class AnimalAdapterView(private val context: Context, private var animals: MutableList<Animal>) : RecyclerView.Adapter<AnimalAdapterView.AnimalViewHolder>() {
@@ -56,17 +60,24 @@ class AnimalAdapterView(private val context: Context, private var animals: Mutab
 
         private var animalName: TextView? = null
         private var animalGender: TextView? = null
-
+        private var animalImage: ImageView? = null
 
         init {
             animalName = itemView.findViewById(R.id.item_animal_name)
             animalGender = itemView.findViewById(R.id.item_animal_gender_content)
+            animalImage = itemView.findViewById(R.id.item_animal_image_view)
         }
 
         fun fillData(animal: Animal) {
             animalName?.text = animal.animalName
             animalGender?.text = Animal.genderValidator(animal?.animalGender)
-
+            if(animal.imageString != Animal.EMPTY) {
+                animalImage!!.setImageURI(
+                    Uri.parse(
+                        File(animal.imageString).toString()
+                    )
+                )
+            }
         }
     }
 

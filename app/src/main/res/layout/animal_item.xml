@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/item_animal_image_view"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -29,6 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_default_icon"
+            android:scaleType="centerCrop"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -51,7 +52,8 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/item_animal_image_view"
             app:layout_constraintStart_toStartOf="@+id/item_animal_name"
-            app:layout_constraintTop_toBottomOf="@+id/item_animal_name" />
+            app:layout_constraintTop_toBottomOf="@+id/item_animal_name"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/item_animal_gender_content"
