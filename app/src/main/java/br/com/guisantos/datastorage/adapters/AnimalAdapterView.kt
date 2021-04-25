@@ -18,7 +18,9 @@ import br.com.guisantos.datastorage.views.AnimalView
 import java.io.File
 
 
-class AnimalAdapterView(private val context: Context, private var animals: MutableList<Animal>) : RecyclerView.Adapter<AnimalAdapterView.AnimalViewHolder>() {
+class AnimalAdapterView(private val context: Context) : RecyclerView.Adapter<AnimalAdapterView.AnimalViewHolder>() {
+    private var animals: MutableList<Animal> = arrayListOf()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val viewAnimal = LayoutInflater.from(context).inflate(R.layout.animal_item, parent, false)

@@ -19,7 +19,6 @@ abstract class AnimalDatabase : RoomDatabase() {
         fun getInstance(context: Context?): AnimalDatabase? {
             return Room
                 .databaseBuilder(context!!, AnimalDatabase::class.java, DATABASE_NAME)
-                .allowMainThreadQueries()
                 .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .build()
         }

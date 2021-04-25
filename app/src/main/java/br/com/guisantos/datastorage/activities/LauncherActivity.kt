@@ -12,6 +12,8 @@ import br.com.guisantos.datastorage.R
 import br.com.guisantos.datastorage.adapters.AnimalAdapterView
 import br.com.guisantos.datastorage.database.AnimalDatabase
 import br.com.guisantos.datastorage.database.dao.AnimalDao
+import br.com.guisantos.datastorage.database.entities.Animal
+import br.com.guisantos.datastorage.database.tasks.SearchAnimalsTask
 import br.com.guisantos.datastorage.views.AnimalView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -30,7 +32,7 @@ class LauncherActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.ac_launcher_animal_list)
         animalView = AnimalView(
                 recyclerView,
-                AnimalAdapterView(this , dao!!.getAll()),
+                AnimalAdapterView(this),
                 LinearLayoutManager(this),
                 this,
                 dao!!
@@ -41,7 +43,7 @@ class LauncherActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        animalView!!.uptadeAdapter(dao!!.getAll())
+        SearchAnimalsTask(dao!!, animalView!!).execute()
     }
 
 

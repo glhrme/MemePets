@@ -10,6 +10,7 @@ import br.com.guisantos.datastorage.activities.FormAnimalActivity
 import br.com.guisantos.datastorage.adapters.AnimalAdapterView
 import br.com.guisantos.datastorage.database.dao.AnimalDao
 import br.com.guisantos.datastorage.database.entities.Animal
+import br.com.guisantos.datastorage.database.tasks.DeleteAnimalTask
 import br.com.guisantos.datastorage.types.Extras
 import java.io.File
 
@@ -39,7 +40,7 @@ class AnimalView(
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 if (direction == ItemTouchHelper.LEFT) {
-                    animalDao.delete(adapter.getAnimal(viewHolder.adapterPosition))
+                    DeleteAnimalTask(animalDao, adapter.getAnimal(viewHolder.adapterPosition)).execute()
                     adapter.removeAnimal(viewHolder.adapterPosition)
                 } else {
                     context.startActivity(Intent(context, FormAnimalActivity::class.java).putExtra(Extras.ANIMAL_TO_EDIT, adapter.getAnimal(viewHolder.adapterPosition).uid))
