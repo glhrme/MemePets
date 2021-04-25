@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -21,6 +22,10 @@ import br.com.guisantos.datastorage.R
 import br.com.guisantos.datastorage.database.AnimalDatabase
 import br.com.guisantos.datastorage.database.dao.AnimalDao
 import br.com.guisantos.datastorage.database.entities.Animal
+import br.com.guisantos.datastorage.database.tasks.GetAnimalTask
+import br.com.guisantos.datastorage.database.tasks.SaveAnimalTask
+import br.com.guisantos.datastorage.database.tasks.SaveAnimalTask.AnimalSavedListener
+import br.com.guisantos.datastorage.database.tasks.UptadeAnimalTask
 import br.com.guisantos.datastorage.types.Extras
 import br.com.guisantos.datastorage.utils.PermissionsUtils
 import br.com.guisantos.datastorage.utils.UtilsUri.Companion.getRealPathFromURI
@@ -48,16 +53,7 @@ class FormAnimalActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         if(intent.hasExtra(Extras.ANIMAL_TO_EDIT)) {
             toEdit = true
             var uid = intent.getSerializableExtra(Extras.ANIMAL_TO_EDIT) as Int
-            animal = dao!!.getAnimal(uid)
-            animalNameField!!.setText(animal.animalName!!, TextView.BufferType.EDITABLE)
-            checkRadioButton()
-            if(animal.imageString != Animal.EMPTY) {
-                imageViewAnimal!!.setImageURI(
-                    Uri.parse(
-                        File(animal.imageString).toString()
-                    )
-                )
-            }
+            GetAnimalTask(dao!!, uid, OnGetAnimalListener(this)).execute()
         }
     }
 
@@ -80,10 +76,9 @@ class FormAnimalActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         } else {
             animal.animalName = animalNameField?.text.toString()
             if(toEdit)
-                dao?.update(animal)
+                UptadeAnimalTask(dao!!, animal, OnUpdatedAnimalListener(this)).execute()
             else
-                dao?.create(animal)
-            finish()
+                SaveAnimalTask(animal, dao!!, OnSavedAnimalListener(this)).execute()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -101,12 +96,11 @@ class FormAnimalActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
     }
 
     private fun checkRadioButton() {
-        var radioButtonFemea: RadioButton = findViewById(R.id.ac_form_animal_radio_femea)
-        var radioButtonMacho: RadioButton = findViewById(R.id.ac_form_animal_radio_macho)
+        var radioGroup: RadioGroup = findViewById(R.id.ac_form_animal_gender_group)
         if(animal.animalGender == Animal.FEMEA) {
-            radioButtonFemea.isChecked = true
+            radioGroup.check(R.id.ac_form_animal_radio_femea)
         } else if(animal.animalGender == Animal.MACHO) {
-            radioButtonMacho.isChecked = true
+            radioGroup.check(R.id.ac_form_animal_radio_macho)
         }
     }
 
@@ -233,6 +227,39 @@ class FormAnimalActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         if(imageString is String) {
             AnimalView.addImageAnimalView(imageViewAnimal!!, imageString)
             animal.imageString = imageString
+        }
+    }
+
+    private fun addAnimalEditInfos(animal: Animal) {
+        this.animal = animal
+        animalNameField!!.setText(animal.animalName!!, TextView.BufferType.EDITABLE)
+        checkRadioButton()
+        if(animal.imageString != Animal.EMPTY) {
+            imageViewAnimal!!.setImageURI(
+                    Uri.parse(
+                            File(animal.imageString).toString()
+                    )
+            )
+        }
+        checkRadioButton()
+    }
+
+    class OnSavedAnimalListener(private val activity: Activity) : AnimalSavedListener {
+        override fun onAnimalSavedListener() {
+            activity.finish()
+        }
+    }
+
+    class OnUpdatedAnimalListener(private val activity: Activity) : UptadeAnimalTask.UpdateAnimalListener {
+        override fun onUpdateAnimal() {
+            activity.finish()
+        }
+    }
+
+    class OnGetAnimalListener(private val activity: FormAnimalActivity) : GetAnimalTask.GetAnimalListener {
+        override fun onGetAnimal(result: Animal?) {
+            if(result != null)
+                activity.addAnimalEditInfos(result)
         }
     }
 
