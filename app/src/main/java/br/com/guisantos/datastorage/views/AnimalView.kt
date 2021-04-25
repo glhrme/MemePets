@@ -2,10 +2,8 @@ package br.com.guisantos.datastorage.views
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.os.Parcelable
-import android.util.Log
-import android.widget.Toast
+import android.net.Uri
+import android.widget.ImageView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import br.com.guisantos.datastorage.activities.FormAnimalActivity
@@ -13,7 +11,7 @@ import br.com.guisantos.datastorage.adapters.AnimalAdapterView
 import br.com.guisantos.datastorage.database.dao.AnimalDao
 import br.com.guisantos.datastorage.database.entities.Animal
 import br.com.guisantos.datastorage.types.Extras
-import java.io.Serializable
+import java.io.File
 
 class AnimalView(
         private val recyclerAnimal: RecyclerView,
@@ -54,6 +52,16 @@ class AnimalView(
 
     fun uptadeAdapter(animals: MutableList<Animal>) {
         adapter.update(animals)
+    }
+
+    companion object {
+        fun addImageAnimalView(imageView: ImageView, imageString: String) {
+            imageView!!.setImageURI(
+                    Uri.parse(
+                            File(imageString).toString()
+                    )
+            )
+        }
     }
 
     fun init() {

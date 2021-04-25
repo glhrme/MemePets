@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.guisantos.datastorage.database.entities.Animal
 import br.com.guisantos.datastorage.utils.UtilsUri
+import br.com.guisantos.datastorage.views.AnimalView
 import java.io.File
 
 
@@ -72,11 +73,7 @@ class AnimalAdapterView(private val context: Context, private var animals: Mutab
             animalName?.text = animal.animalName
             animalGender?.text = Animal.genderValidator(animal?.animalGender)
             if(animal.imageString != Animal.EMPTY) {
-                animalImage!!.setImageURI(
-                    Uri.parse(
-                        File(animal.imageString).toString()
-                    )
-                )
+                AnimalView.addImageAnimalView(animalImage!!, animal.imageString!!)
             }
         }
     }

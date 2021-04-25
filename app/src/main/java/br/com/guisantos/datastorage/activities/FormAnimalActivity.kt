@@ -24,6 +24,7 @@ import br.com.guisantos.datastorage.database.entities.Animal
 import br.com.guisantos.datastorage.types.Extras
 import br.com.guisantos.datastorage.utils.PermissionsUtils
 import br.com.guisantos.datastorage.utils.UtilsUri.Companion.getRealPathFromURI
+import br.com.guisantos.datastorage.views.AnimalView
 import java.io.File
 
 
@@ -230,11 +231,7 @@ class FormAnimalActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
     private fun addImageAnimal(data: Uri?) {
         val imageString = getRealPathFromURI(data!!, this)
         if(imageString is String) {
-            imageViewAnimal!!.setImageURI(
-                Uri.parse(
-                    File(imageString).toString()
-                )
-            )
+            AnimalView.addImageAnimalView(imageViewAnimal!!, imageString)
             animal.imageString = imageString
         }
     }
