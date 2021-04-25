@@ -43,7 +43,7 @@ class LauncherActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        SearchAnimalsTask(dao!!, animalView!!).execute()
+        SearchAnimalsTask(dao!!, onFoundAnimalsListener(animalView!!)).execute()
     }
 
 
@@ -56,5 +56,11 @@ class LauncherActivity : AppCompatActivity() {
                     .toBundle())
                 }
         )
+    }
+
+    class onFoundAnimalsListener(private val animalView: AnimalView) : SearchAnimalsTask.AnimalsFoundListener {
+        override fun whenFound(animals: MutableList<Animal>) {
+            this.animalView.uptadeAdapter(animals)
+        }
     }
 }
